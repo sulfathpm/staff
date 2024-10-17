@@ -25,6 +25,9 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
+// Initialize a variable for status messages
+$statusMessage = "";
+
 // Check if the form is submitted for updating the status
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update'])) {
     $order_id = $_POST['order_id'];
@@ -37,19 +40,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update'])) {
     if ($stmt) {
         $stmt->bind_param("si", $status, $order_id);
         if ($stmt->execute()) {
-            echo "<p>Order status updated successfully!</p>";
+            $statusMessage = "Order status updated successfully!";
         } else {
-            echo "<p>Error updating record: " . $stmt->error . "</p>";
+            $statusMessage = "Error updating record: " . $stmt->error;
         }
         $stmt->close();
     }
 }
 
-// Fetch orders from the database
+// Fetch orders assigned to the logged-in staff member from the database
+$staff_id = $_SESSION["USER_ID"];
 $sql = "SELECT orders.ORDER_ID, users.USER_ID, orders.SSIZE, orders.STATUSES, orders.ESTIMATED_DELIVERY_DATE 
         FROM orders
-        INNER JOIN users ON orders.USER_ID = users.USER_ID";
-$result = $conn->query($sql);
+        INNER JOIN users ON orders.USER_ID = users.USER_ID
+        INNER JOIN order_assignments ON orders.ORDER_ID = order_assignments.ORDER_ID
+        WHERE order_assignments.STAFF_ID = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $staff_id);
+$stmt->execute();
+$result = $stmt->get_result();
 ?>
 
 <!DOCTYPE html>
@@ -60,7 +69,6 @@ $result = $conn->query($sql);
     <title>Manage Orders</title>
     <link rel="stylesheet" href="staff1.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-
     <style>
         .navbar {
             background-color: #4a4e69; /* Dark purple */
@@ -72,10 +80,6 @@ $result = $conn->query($sql);
             padding: 14px 20px;
             text-decoration: none;
             display: inline-block;
-        }
-          /* Add padding to both sides of the table */
-          .table-container {
-            padding: 0 20px; /* Adds padding to both left and right sides of the table */
         }
         table {
             width: 100%;
@@ -112,6 +116,13 @@ $result = $conn->query($sql);
 
     <div class="container">
         <h2>Manage Orders</h2>
+        
+        <?php if ($statusMessage): ?>
+            <script>
+                alert("<?php echo addslashes($statusMessage); ?>");
+            </script>
+        <?php endif; ?>
+
         <table>
             <thead>
                 <tr>
@@ -142,8 +153,6 @@ $result = $conn->query($sql);
                                 <option value='pending'" . ($row['STATUSES'] == 'pending' ? " selected" : "") . ">Pending</option>
                                 <option value='in-progress'" . ($row['STATUSES'] == 'in-progress' ? " selected" : "") . ">In Progress</option>
                                 <option value='completed'" . ($row['STATUSES'] == 'completed' ? " selected" : "") . ">Completed</option>
-                                <option value='delivered'" . ($row['STATUSES'] == 'delivered' ? " selected" : "") . ">Delivered</option>
-                                <option value='cancelled'" . ($row['STATUSES'] == 'cancelled' ? " selected" : "") . ">Cancelled</option>
                             </select>";
                         echo "<button type='submit' name='update'>Update</button>";
                         echo "</form>";

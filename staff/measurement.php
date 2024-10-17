@@ -5,7 +5,7 @@ session_start();
 // Database configuration
 $host = 'localhost';
 $dbname = 'fashion'; // Replace with your database name
-$user = 'root'; // Replace with your database username
+$user = 'root'; // Replace with your database username  
 $pass = ''; // Replace with your database password
 
 try {
@@ -25,33 +25,16 @@ if (!isset($_SESSION["USER_ID"])) {
     exit(); // Terminate the script after redirection
 }
 
-// Handle form submission
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $user_id = $_POST['user-id']; // Assuming you will pass user ID in the form
-    $dress_id = $_POST['dress-id']; // Assuming you will pass dress ID in the form
-    $fabric_id = $_POST['fabric-id']; // Assuming you will pass fabric ID in the form
-    $shoulder = $_POST['shoulder'];
-    $bust = $_POST['bust'];
-    $waist = $_POST['waist'];
-    $hip = $_POST['hip'];
+// Get the logged-in staff's USER_ID
+$staff_id = $_SESSION["USER_ID"];
 
-    // Insert the new measurement into the database
-    $sql = "INSERT INTO measurements (USER_ID, DRESS_ID, FABRIC_ID, SHOULDER, BUST, WAIST, HIP) VALUES (:user_id, :dress_id, :fabric_id, :shoulder, :bust, :waist, :hip)";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([
-        ':user_id' => $user_id,
-        ':dress_id' => $dress_id,
-        ':fabric_id' => $fabric_id,
-        ':shoulder' => $shoulder,
-        ':bust' => $bust,
-        ':waist' => $waist,
-        ':hip' => $hip
-    ]);
-}
-
-// Retrieve existing measurements
-$sql = "SELECT * FROM measurements";
-$stmt = $pdo->query($sql);
+// Retrieve measurements for orders assigned to the logged-in staff member
+$sql = "SELECT m.MEASUREMENT_ID, m.USER_ID, m.DRESS_ID, m.FABRIC_ID, m.SHOULDER, m.BUST, m.WAIST, m.HIP, m.CREATED_AT 
+        FROM measurements m
+        INNER JOIN order_assignments oa ON m.DRESS_ID = oa.ORDER_ID
+        WHERE oa.STAFF_ID = :staff_id";
+$stmt = $pdo->prepare($sql);
+$stmt->execute([':staff_id' => $staff_id]);
 $measurements = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
@@ -77,7 +60,6 @@ $measurements = $stmt->fetchAll(PDO::FETCH_ASSOC);
             display: inline-block;
         }
 
-        /* Add padding to both sides of the table */
         .table-container {
             padding: 0 20px; /* Adds padding to both left and right sides of the table */
         }
@@ -125,7 +107,7 @@ $measurements = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <div class="table-container">
-        <h3>Existing Measurements</h3>
+        <h3>Assigned Measurements</h3>
         <table>
             <thead>
                 <tr>
@@ -141,19 +123,23 @@ $measurements = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($measurements as $measurement): ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($measurement['MEASUREMENT_ID']); ?></td>
-                    <td><?php echo htmlspecialchars($measurement['USER_ID']); ?></td>
-                    <td><?php echo htmlspecialchars($measurement['DRESS_ID']); ?></td>
-                    <td><?php echo htmlspecialchars($measurement['FABRIC_ID']); ?></td>
-                    <td><?php echo htmlspecialchars($measurement['SHOULDER']); ?></td>
-                    <td><?php echo htmlspecialchars($measurement['BUST']); ?></td>
-                    <td><?php echo htmlspecialchars($measurement['WAIST']); ?></td>
-                    <td><?php echo htmlspecialchars($measurement['HIP']); ?></td>
-                    <td><?php echo htmlspecialchars($measurement['CREATED_AT']); ?></td>
-                </tr>
-                <?php endforeach; ?>
+                <?php if (!empty($measurements)): ?>
+                    <?php foreach ($measurements as $measurement): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($measurement['MEASUREMENT_ID']); ?></td>
+                            <td><?php echo htmlspecialchars($measurement['USER_ID']); ?></td>
+                            <td><?php echo htmlspecialchars($measurement['DRESS_ID']); ?></td>
+                            <td><?php echo htmlspecialchars($measurement['FABRIC_ID']); ?></td>
+                            <td><?php echo htmlspecialchars($measurement['SHOULDER']); ?></td>
+                            <td><?php echo htmlspecialchars($measurement['BUST']); ?></td>
+                            <td><?php echo htmlspecialchars($measurement['WAIST']); ?></td>
+                            <td><?php echo htmlspecialchars($measurement['HIP']); ?></td>
+                            <td><?php echo htmlspecialchars($measurement['CREATED_AT']); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr><td colspan="9">No measurements assigned to you.</td></tr>
+                <?php endif; ?>
             </tbody>
         </table>
     </div>
