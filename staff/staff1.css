@@ -1,0 +1,84 @@
+body {
+    font-family: 'Poppins', sans-serif; /* Updated font */
+    background-color: #f7f7f7; /* Softer background color */
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-color: #4a4e69; /* Dark purple */
+    color: #fff;
+    padding: 15px;
+    text-align: center;
+}
+
+.sidebar {
+    width: 200px;
+    background-color: #22223b; /* Darker navy blue */
+    color: #fff;
+    height: 100vh;
+    float: left;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.sidebar a {
+    color: #f2e9e4; /* Light beige */
+    display: block;
+    padding: 10px 0;
+    text-decoration: none;
+}
+
+.sidebar a:hover {
+    background-color: #4a4e69; /* Dark purple for hover */
+}
+
+.main-content {
+    margin-left: 220px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 10px; /* Slightly larger border radius */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+    margin-bottom: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.card h2 {
+    margin-top: 0;
+    color: #22223b; /* Header text color */
+}
+
+.card table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.card table th,
+.card table td {
+    border: 1px solid #ddd;
+    padding: 10px; /* Increased padding */
+    text-align: left;
+}
+
+.card table th {
+    background-color: #f2e9e4; /* Light beige for table headers */
+}
+
+button {
+    padding: 8px 15px; /* Increased button size */
+    margin-right: 5px;
+    border: none;
+    background-color: #9a7bba; /* Lavender */
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px; /* Rounded corners */
+}
+
+button:hover {
+    background-color: #7c4d8b; /* Darker lavender on hover */
+}

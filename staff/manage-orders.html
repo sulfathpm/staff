@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Orders</title>
+    <link rel="stylesheet" href="staff.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Manage Orders</h1>
+    </div>
+
+    <div class="staff-dashboard">
+        <!-- Sidebar for navigation -->
+        <aside class="sidebar">
+            <h3>Menu</h3>
+            <a href="staffdash.html">Dashboard</a>
+            <a href="manage-orders.html">Manage Orders</a>
+            <a href="pending-orders.html">Pending Orders</a>
+            <a href="recent-communications.html">Communication</a> 
+            <a href="measurement.html">Measurements</a>
+            <a href="#">Material Requirements</a>
+        </aside>
+
+        <!-- Main content area -->
+        <main class="main-content">
+            <section id="manage-orders-section" class="card">
+                <h2>Manage Orders</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer Name</th>
+                            <th>Status</th>
+                            <th>Due Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1237</td>
+                            <td>Alice Brown</td>
+                            <td>Processing</td>
+                            <td>2024-08-12</td>
+                            <td><button>Update</button></td>
+                        </tr>
+                        <tr>
+                            <td>1238</td>
+                            <td>Linda White</td>
+                            <td>Awaiting Materials</td>
+                            <td>2024-08-14</td>
+                            <td><button>Update</button></td>
+                        </tr>
+                        <tr>
+                            <td>1239</td>
+                            <td>Susan Black</td>
+                            <td>Ready for Pickup</td>
+                            <td>2024-08-10</td>
+                            <td><button>Update</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

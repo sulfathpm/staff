@@ -1,0 +1,84 @@
+body {
+    font-family: 'Montserrat', sans-serif; /* Updated font */
+    background-color: #ffffff; /* Clean white background */
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-color: #1d3557; /* Dark blue */
+    color: #f1faee; /* Light grayish-white */
+    padding: 15px;
+    text-align: center;
+}
+
+.sidebar {
+    width: 200px;
+    background-color: #457b9d; /* Soft teal */
+    color: #f1faee;
+    height: 100vh;
+    float: left;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.sidebar a {
+    color: #f1faee; /* Light grayish-white */
+    display: block;
+    padding: 10px 0;
+    text-decoration: none;
+}
+
+.sidebar a:hover {
+    background-color: #1d3557; /* Dark blue for hover */
+}
+
+.main-content {
+    margin-left: 220px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.card {
+    background-color: #f8f9fa; /* Light gray */
+    border-radius: 10px; /* Slightly larger border radius */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
+    margin-bottom: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.card h2 {
+    margin-top: 0;
+    color: #1d3557; /* Dark blue for header */
+}
+
+.card table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.card table th,
+.card table td {
+    border: 1px solid #ddd;
+    padding: 10px; /* Increased padding */
+    text-align: left;
+}
+
+.card table th {
+    background-color: #a8dadc; /* Light teal for table headers */
+}
+
+button {
+    padding: 8px 15px; /* Increased button size */
+    margin-right: 5px;
+    border: none;
+    background-color: #e63946; /* Bright red */
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px; /* Rounded corners */
+}
+
+button:hover {
+    background-color: #d62839; /* Darker red on hover */
+}

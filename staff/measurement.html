@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Measurements</title>
+    <link rel="stylesheet" href="staff.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Measurements</h1>
+    </div>
+
+    <div class="staff-dashboard">
+        <!-- Sidebar for navigation -->
+        <aside class="sidebar">
+            <h3>Menu</h3>
+            <a href="staffdash.html">Dashboard</a>
+            <a href="manage-orders.html">Manage Orders</a>
+            <a href="pending-orders.html">Pending Orders</a>
+            <a href="recent-communications.html">Communication</a> 
+            <a href="measurement.html">Measurements</a>
+            <a href="#">Material Requirements</a>
+        </aside>
+
+        <!-- Main content area -->
+        <main class="main-content">
+            <section class="card">
+                <h2>Input and Manage Measurements</h2>
+                <p>Here you can input and manage customer measurements.</p>
+                <form action="#" method="post" class="measurement-form">
+                    <h3>Enter New Measurement</h3>
+                    <label for="order-id">Order ID:</label>
+                    <input type="text" id="order-id" name="order-id" required>
+
+                    <label for="customer-name">Customer Name:</label>
+                    <input type="text" id="customer-name" name="customer-name" required>
+
+                    <label for="bust">Bust (in inches):</label>
+                    <input type="number" id="bust" name="bust" step="0.1" required>
+
+                    <label for="waist">Waist (in inches):</label>
+                    <input type="number" id="waist" name="waist" step="0.1" required>
+
+                    <label for="hips">Hips (in inches):</label>
+                    <input type="number" id="hips" name="hips" step="0.1" required>
+
+                    <label for="length">Length (in inches):</label>
+                    <input type="number" id="length" name="length" step="0.1" required>
+
+                    <button type="submit">Submit</button>
+                </form>
+
+                <!-- Existing Measurements Table -->
+                <h3>Existing Measurements</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer Name</th>
+                            <th>Bust</th>
+                            <th>Waist</th>
+                            <th>Hips</th>
+                            <th>Length</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1237</td>
+                            <td>Alice Brown</td>
+                            <td>34</td>
+                            <td>28</td>
+                            <td>36</td>
+                            <td>58</td>
+                            <td><button>Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td>1238</td>
+                            <td>Linda White</td>
+                            <td>36</td>
+                            <td>30</td>
+                            <td>38</td>
+                            <td>60</td>
+                            <td><button>Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td>1239</td>
+                            <td>Susan Black</td>
+                            <td>32</td>
+                            <td>26</td>
+                            <td>34</td>
+                            <td>55</td>
+                            <td><button>Edit</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
